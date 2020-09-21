@@ -42,3 +42,56 @@ function powerCalculator(base, exponent) {
 }
 
 // console.log(powerCalculator(2, 5)) // 
+
+//3. Reverse string
+//Write a function that reverses a string. 
+//Take a string as input, reverse the string, and return the new string.
+
+const reverseString = (str) => {
+  //base case
+  if (str === '') {
+    return '';
+  }
+  else {
+    return reverseString(str.substr(1)) + str.charAt(0)
+  }
+
+}
+
+// console.log(reverseString('apple'));
+
+//4. nth Triangular Number
+
+const nTriangularNum = (num) => {
+  if (num === 1) {
+    return num;
+  }
+  else {
+   return num + nTriangularNum(num - 1)
+  }
+}
+
+// console.log(nTriangularNum(9)) // 45
+
+
+
+//5. String Splitter
+
+const strSplitter = (str, splitter) => {
+  const newArr = []
+  //base case
+  if (str.indexOf(splitter) === -1) {
+    newArr.push(str);
+    return newArr;
+  }
+  //recursive case
+  let splitterIndex = str.indexOf(splitter)
+  console.log(splitterIndex)
+
+  newArr.push(str.substr(0, splitterIndex))
+  strSplitter(str.substr(splitterIndex + 1), splitter)
+  return newArr
+  // return newArr.concat(strSplitter(str.slice(splitterIndex), splitter))
+}
+
+console.log(strSplitter('a/quick/brown/fox', '/'));
