@@ -81,17 +81,119 @@ const strSplitter = (str, splitter) => {
   const newArr = []
   //base case
   if (str.indexOf(splitter) === -1) {
-    newArr.push(str);
+    newArr.push(str)
     return newArr;
   }
   //recursive case
   let splitterIndex = str.indexOf(splitter)
-  console.log(splitterIndex)
 
-  newArr.push(str.substr(0, splitterIndex))
-  strSplitter(str.substr(splitterIndex + 1), splitter)
-  return newArr
-  // return newArr.concat(strSplitter(str.slice(splitterIndex), splitter))
+  let newStr  = str.substr(0, splitterIndex);
+ 
+  let endOfStr = str.substr(splitterIndex + 1, str.length);
+
+  newArr.push(newStr)
+
+ return newArr.concat(strSplitter(endOfStr, splitter)); 
 }
 
-console.log(strSplitter('a/quick/brown/fox', '/'));
+console.log(strSplitter('a quick brown fox', ' '));
+
+//6. Fibonacci
+const fibonnaci = (num) => {
+  if (num == 0) {
+    return 0;
+  }
+  if (num === 1) {
+    return 1;
+  }
+
+  return fibonnaci(num - 1) + fibonnaci(num - 2);  
+}
+
+// console.log(fibonnaci(7));
+
+
+// 7. Factorial
+
+const factorial = (num) => {
+  if (num === 1) {
+    return 1;
+  }
+
+  return num * factorial(num - 1);
+}
+
+// console.log(factorial(5));
+
+// 8. Find a way out of the maze
+let mySmallMaze = [
+  [' ', ' ', ' '],
+  [' ', '*', ' '],
+  [' ', ' ', 'e']
+];
+
+function pathFinder(maze) {
+  this.maze = maze
+
+  this.traverse = function(column , row) {
+    if (this.maze[column][row] === 'e') {
+      console.log('Solution at ' + column + row);
+      return;
+    } else if (this.maze[column][row] === '*') {
+      this.maze[column][row] = 5;
+      if (column < this.maze.length - 1) {
+        this.traverse(column + 1, row);
+      }
+      if(row < this.maze[column].length - 1) {
+        this.traverse(column, row + 1);
+      }
+      if(column > 0) {
+        this.traverse(column - 1, row);
+      }
+      if(row > 0) {
+        this.traverse(column, row - 1);
+      }
+    }
+
+  }
+}
+
+// var ms = new pathFinder(mySmallMaze)
+// console.log(ms.traverse(0,0))
+
+//10. Anagrams
+
+// const findAllAnagrams = (word) => {
+//   const wordArray = word.split('');
+//   //base 
+//   if( wordArray.length === 0) {
+//     return;
+//   }
+//   //recursion 
+//   const firstChar = wordArray[0] // e
+//   console.log(firstChar)
+//   const remainingChar = wordArray.slice(1) // [a, s , t]
+//   console.log(remainingChar)
+//   const removedChar = remainingChar.shift()// a
+//  remainingChar.join('')
+//   let newWord =firstChar.concat(remainingChar, removedChar)
+// console.log(newWord)
+//   //grab the letter at the first index
+//   // create all words with remaining letters
+//   //then we
+// }
+
+// findAllAnagrams('east');
+
+
+function anagramGrouper(words){
+  const anagrams = {};
+  words.forEach((word)=>{
+      const sortedWord = alphabetize(word);
+      if (anagrams[sortedWord]) {
+          return anagrams[sortedWord].push(word);
+      }
+      anagrams[sortedWord] = [word];
+  });
+  return anagrams;
+}
