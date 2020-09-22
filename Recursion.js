@@ -140,67 +140,11 @@ let maze = [
   [' ', ' ', ' ', ' ', ' ', ' ', 'e']
 ];
 
-function pathFinder(maze) {
-  this.maze = maze
 
-  this.traverse = function (column, row) {
-    if (this.maze[column][row] === 'e') {
-      console.log('Solution at ' + column + row);
-      return;
-    } else if (this.maze[column][row] === '*') {
-      this.maze[column][row] = 5;
-      if (column < this.maze.length - 1) {
-        this.traverse(column + 1, row);
-      }
-      if (row < this.maze[column].length - 1) {
-        this.traverse(column, row + 1);
-      }
-      if (column > 0) {
-        this.traverse(column - 1, row);
-      }
-      if (row > 0) {
-        this.traverse(column, row - 1);
-      }
-    }
-
-  }
-}
-
-// traverse = (maze, pos, steps ='') =>{
-//   if (pos is exist) {return steps}
-//     return (canGoUp && traverse(maze, posR, steps + 'U')) ||
-//     (canGoRight && traverse(maze, posR, steps + 'R')) ||
-//     (canGoDown && traverse(maze, posR, steps + 'D')) ||
-//     (canGoLeft && traverse(maze, posR, steps + 'L'))
-  
-// }
-
-// var ms = new pathFinder(mySmallMaze)
-// console.log(ms.traverse(0,0))
 
 //10. Anagrams
 
-// const findAllAnagrams = (word) => {
-//   const wordArray = word.split('');
-//   //base 
-//   if( wordArray.length === 0) {
-//     return;
-//   }
-//   //recursion 
-//   const firstChar = wordArray[0] // e
-//   console.log(firstChar)
-//   const remainingChar = wordArray.slice(1) // [a, s , t]
-//   console.log(remainingChar)
-//   const removedChar = remainingChar.shift()// a
-//  remainingChar.join('')
-//   let newWord =firstChar.concat(remainingChar, removedChar)
-// console.log(newWord)
-//   //grab the letter at the first index
-//   // create all words with remaining letters
-//   //then we
-// }
 
-// findAllAnagrams('east');
 
 const findAllAnagrams = (word) => {
 // base case
