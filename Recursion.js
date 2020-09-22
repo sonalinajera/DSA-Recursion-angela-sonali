@@ -132,6 +132,14 @@ let mySmallMaze = [
   [' ', ' ', 'e']
 ];
 
+let maze = [
+  [' ', ' ', ' ', '*', ' ', ' ', ' '],
+  ['*', '*', ' ', '*', ' ', '*', ' '],
+  [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+  [' ', '*', '*', '*', '*', '*', ' '],
+  [' ', ' ', ' ', ' ', ' ', ' ', 'e']
+];
+
 function pathFinder(maze) {
   this.maze = maze
 
@@ -232,103 +240,96 @@ function anagramGrouper(words) {
 
 
 
-// // 11. Org chart 
-// let orgChart = {
-//   Zuckerberg: [
-//     {
-//       Schroepfer: [
-//         {
-//           Bosworth:
-//             [
-//               Steve,
-//               Kyle,
-//               Andra,
-//             ]
-//         },
-//         {
-//           Zhao:
-//             [
-//               Richie,
-//               Sofia,
-//               Jen,
-//             ]
-//         }
-//       ]
-//     },
-//     {
-//       Schrage: [
-//         {
-//           VanDyck:
-//             [
-//               Sabrina,
-//               Michelle,
-//               Josh
-//             ]
-//         },
-//         {
-//           Swain:
-//             [
-//               Blanch,
-//               Tom,
-//               Joe,
-//             ]
-//         }
-//       ]
-//     },
-//     {
-//       Sandberg:
-//         [
-//           {
-//             Goler:
-//               [
-//                 Eddie,
-//                 Julie,
-//                 Annie,
-//               ]
-//           },
-//           {
-//             Hernandez:
-//               [
-//                 Rowi,
-//                 Inga,
-//                 Morgan,
-//               ]
-//           },
-//           {
-//             Moissinac:
-//               [
-//                 Amy,
-//                 Chuck,
-//                 Vinni,
-//               ]
-//           },
-//           {
-//             Kelley:
-//               [
-//                 Eric,
-//                 Ana,
-//                 Wes,
-//               ]
-//           }
-//         ]
-//     }
-//   ]
-// }
-
-// let babyOrg =  {
-//   Kelley:
-//     [
-//       Eric,
-//       Ana,
-//       Wes,
-//     ]
-// }
-
-// const printOrgChart = (chart) => {
-//   // base case 
-  
-//   // recursion 
-// }
+const orgChart = {
+  name: 'Zuckerberg',
+  directReports: [
+    {
+      name: 'Schroepfer',
+      directReports: [
+        {
+          name: 'Bowsworth',
+          directReports: [
+            {name: 'Steve',directReports: []},
+            {name: 'Kyle',directReports: []},
+            {name: 'Andra',directReports: []},
+          ]
+        },
+        {
+          name: 'Zhao',
+          directReports: [
+            {name: 'Richie', directReports: []},
+            {name: 'Sofia', directReports: []},
+            {name: 'Jen',directReports: []},
+          ]
+        }
+      ],
+    },
+    {
+      name: 'Schrage',
+      directReports: [
+        {
+          name: 'VanDyck',
+          directReports: [
+            {name: 'Sabrina', directReports: []},
+            {name: 'Michelle', directReports: []},
+            {name: 'Josh', directReports: []}
+          ]
+        },
+        {
+          name: 'Swain',
+          directReports: [
+            {name: 'Blanch', directReports: []},
+            {name: 'Tom', directReports: []},
+            {name: 'Joe', directReports: []}
+          ]
+        }
+      ]
+    },
+    {
+      name: 'Sandberg',
+      directReports: [
+        {
+          name: 'Goler',
+          directReports: [
+            {name: 'Eddie', directReports: []},
+            {name: 'Julie', directReports: []},
+            {name: 'Annie', directReports: []}
+          ]
+        },
+        {
+          name: 'Hernandez',
+          directReports: [
+            {name: 'Rowi', directReports: []},
+            {name: 'Inga', directReports: []},
+            {name: 'Morgan', directReports: []}
+          ]
+        },
+        {
+          name: 'Moissinac',
+          directReports: [
+            {name: 'Amy', directReports: []},
+            {name: 'Chuck', directReports: []},
+            {name: 'Vinni', directReports: []}
+          ]
+        },
+        {
+          name: 'Kelley',
+          directReports: [
+            {name: 'Eric', directReports: []},
+            {name: 'Ana', directReports: []},
+            {name: 'Wes', directReports: []}
+          ]
+        }
+      ]
+    }
+  ]
+}
+function printOrgChart(orgObj, indent = '') {
+  console.log(indent + orgObj.name)
+  indent += '\t'
+  orgObj.directReports.forEach(person => printOrgChart(person, indent))
+}
+// printOrgChart(orgChart)
 
 //12. Binary Representation 
 
@@ -350,9 +351,50 @@ const getBinaryValue = (num) => {
     return binary + '1';
   }
  
-  return binary + getBinaryValue(Math.floor(num / 2)) + num % 2;
+  return binary + getBinaryValue(Math.floor(num / 2)) + (num % 2).toString();
   // '' + 1 + 1  = 1 1 
 
 }
 
 // console.log(getBinaryValue(25));
+
+
+function mazeRunner(x, y, path, maze) {
+  //walls and constraints 
+  if(x < 0 || y < 0 || y >= maze.length || x >= maze[y].length || maze[y][x] === '*') {
+    return null
+  }
+  //endpoint
+  if(maze[y][x] === 'e') {
+    return path
+  }
+  maze = maze.map(row => [...row])
+  maze[y][x] = '*'
+  return mazeRunner(x + 1, y, path + 'R', maze) 
+    || mazeRunner(x - 1, y, path + 'L', maze) 
+    || mazeRunner(x, y + 1, path + 'D', maze) 
+    || mazeRunner(x, y - 1, path + 'U', maze)
+}
+console.log(mazeRunner(0, 0, '', mySmallMaze))
+console.log(mazeRunner(0, 0, '', maze))
+
+
+
+//All maze paths
+function findAllPaths(x, y, path, maze) {
+  if(x < 0 || y < 0 || y >= maze.length || x >= maze[y].length || maze[y][x] === '*') {
+    return []
+  }
+  if(maze[y][x] === 'e'){
+    return [path]
+  }
+  maze = maze.map(row => [...row])
+  maze[y][x] = '*'
+  return [
+    ...findAllPaths(x + 1, y, path + 'R', maze),
+    ...findAllPaths(x - 1, y, path + 'L', maze), 
+    ...findAllPaths(x, y - 1, path + 'U', maze), 
+    ...findAllPaths(x, y + 1, path + 'D', maze)
+  ]
+}
+console.log(findAllPaths(0, 0, '', maze))
